@@ -85,10 +85,19 @@ public class AppControlComponent extends HorizontalLayout {
             userInputProcessorService.generateProduct(articleNumber, name, price, productCategory, count);
             dialog.close();
             this.notifyObservers();
+            clearValuesOf(articleNumberField, nameField, priceField, productCtategoryField, countField);
         });
         Button cancelButton = new Button("Cancel", e -> dialog.close());
         dialog.getFooter().add(cancelButton);
         dialog.getFooter().add(saveButton);
+    }
+
+    private static void clearValuesOf(TextField articleNumberField, TextField nameField, NumberField priceField, NumberField productCtategoryField, NumberField countField) {
+        articleNumberField.setValue("");
+        nameField.setValue("");
+        priceField.setValue(null);
+        productCtategoryField.setValue(null);
+        countField.setValue(null);
     }
 
     private void createDialog() {

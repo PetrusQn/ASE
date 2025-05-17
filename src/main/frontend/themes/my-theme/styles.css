@@ -1,0 +1,7 @@
+vaadin-grid::part(row):hover {
+  background: #85C1E9;
+}
+
+vaadin-grid::part(body-cell) {
+  background-color: unset !important;
+}

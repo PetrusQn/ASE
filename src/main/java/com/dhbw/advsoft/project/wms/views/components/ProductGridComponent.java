@@ -6,6 +6,9 @@ import com.dhbw.advsoft.project.wms.application.ProductService;
 import com.dhbw.advsoft.project.wms.domain.models.Product;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
+import com.vaadin.flow.component.grid.ItemDoubleClickEvent;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.selection.SelectionEvent;
 
@@ -23,6 +26,7 @@ public class ProductGridComponent extends VerticalLayout implements ProductObser
         controlComponent.addObserver(this);
 
         productGrid = new Grid<>(Product.class, false);
+        productGrid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
         setUpGrid();
 
         Button deleteButton = new Button("Delete selected");
@@ -53,6 +57,9 @@ public class ProductGridComponent extends VerticalLayout implements ProductObser
 
     private void setUpGrid() {
         productGrid.setSelectionMode(Grid.SelectionMode.MULTI);
+        productGrid.addItemDoubleClickListener(event -> {
+            add(new DetailsView(event.getItem()));
+        });
         productGrid.addColumn(Product::getArticleNumber).setHeader("Article Number");
         productGrid.addColumn(Product::getName).setHeader("Name");
         productGrid.addColumn(Product::getProductcategory).setHeader("Category");
