@@ -35,4 +35,9 @@ public class ProductService {
         return restTemplate.postForObject(BASE_URL, request, Product.class);
     }
 
+    public void deleteProduct(Product productToDelete) {
+        HttpEntity<Product> request = new HttpEntity<>(productToDelete);
+        restTemplate.delete(BASE_URL + "/" + productToDelete.getId());
+    }
+
 }

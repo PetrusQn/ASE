@@ -13,6 +13,10 @@ public class UserInputProcessorService {
     }
 
     public void generateProduct(String articleNumber, String name, double price, int productCategory, int count) {
-        this.productService.addProduct(new Product(UUID.randomUUID().toString(), articleNumber, price, name, productCategory, count));
+        this.productService.addProduct(new Product(Math.abs(UUID.randomUUID().getLeastSignificantBits()), articleNumber, price, name, productCategory, count));
+    }
+
+    public void deleteProduct(Product product) {
+        this.productService.deleteProduct(product);
     }
 }

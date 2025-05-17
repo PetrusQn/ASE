@@ -40,7 +40,6 @@ public class AppControlComponent extends HorizontalLayout {
         }
     }
 
-
     private ArrayList<Button> createControlButtons() {
         ArrayList<Button> buttonList = new ArrayList<>();
 
