@@ -1,5 +1,6 @@
 package com.dhbw.advsoft.project.wms.views.components;
 
+import com.dhbw.advsoft.project.wms.application.ProductObserver;
 import com.dhbw.advsoft.project.wms.application.UserInputProcessorService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -13,17 +14,32 @@ import java.util.ArrayList;
 
 public class AppControlComponent extends HorizontalLayout {
 
-    Dialog dialog;
-    UserInputProcessorService userInputProcessorService;
+    private Dialog dialog;
+    private UserInputProcessorService userInputProcessorService;
+    private ArrayList<ProductObserver> observers = new ArrayList<>();
+
+
 
     public AppControlComponent(UserInputProcessorService userInputProcessorService) {
         this.userInputProcessorService = userInputProcessorService;
+
 
         for(Button button : createControlButtons()) {
             add(button);
         }
         this.setUpOrderDialog();
     }
+
+    public void addObserver(ProductObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (ProductObserver observer : observers) {
+            observer.updateProductsView();
+        }
+    }
+
 
     private ArrayList<Button> createControlButtons() {
         ArrayList<Button> buttonList = new ArrayList<>();
@@ -69,6 +85,7 @@ public class AppControlComponent extends HorizontalLayout {
 
             userInputProcessorService.generateProduct(articleNumber, name, price, productCategory, count);
             dialog.close();
+            this.notifyObservers();
         });
         Button cancelButton = new Button("Cancel", e -> dialog.close());
         dialog.getFooter().add(cancelButton);
