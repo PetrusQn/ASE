@@ -24,7 +24,7 @@ public class ProductController {
     public List<Product> getAllProducts() { return productRepository.findAll(); }
 
     @PostMapping(BASEPATH)
-    public Product createProduct(@RequestBody Product product) { return productRepository.save(product); }
+    public Product addProduct(@RequestBody Product product) { return productRepository.save(product); }
 
     @GetMapping(BASEPATH + "/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {

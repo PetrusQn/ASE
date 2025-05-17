@@ -1,6 +1,7 @@
 package com.dhbw.advsoft.project.wms.application;
 
 import com.dhbw.advsoft.project.wms.domain.models.Product;
+import com.dhbw.advsoft.project.wms.web.exceptions.NoProductsStoredException;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,23 +13,21 @@ import java.util.List;
 public class ProductService {
 
     private static final String BASE_URL = "http://localhost:8080/api/v1/products";
-    private List<Product> cachedProducts;
+
     private final RestTemplate restTemplate;
 
     public ProductService() {
         this.restTemplate = new RestTemplate();
     }
 
-    private void loadProducts() {
+    public List<Product> getAllProducts() {
+        List<Product> cachedProducts;
         Product[] productsArray = restTemplate.getForObject(BASE_URL, Product[].class);
         if(productsArray != null) {
             cachedProducts = Arrays.asList(productsArray);
+            return cachedProducts;
         }
-    }
-
-    public List<Product> getCachedProducts() {
-        this.loadProducts();
-        return this.cachedProducts;
+        throw new NoProductsStoredException("Seems like there are no products in any of your warehouses.");
     }
 
     public Product addProduct(Product newProduct) {
