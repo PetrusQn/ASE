@@ -11,10 +11,10 @@ import com.vaadin.flow.router.Route;
 public class HomeView extends VerticalLayout {
 
     public HomeView(ProductService productService) {
-        AppControlComponent controlComponent = new AppControlComponent(new UserInputProcessorService(productService));
-        add(controlComponent);
-
-        ProductGridComponent productGridComponent = new ProductGridComponent(productService, controlComponent);
-        add(productGridComponent);
+//        AppControlComponent controlComponent = new AppControlComponent(new UserInputProcessorService(productService));
+//        add(controlComponent);
+//
+//        ProductGridComponent productGridComponent = new ProductGridComponent(productService, controlComponent);
+//        add(productGridComponent);
     }
 }

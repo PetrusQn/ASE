@@ -1,13 +1,11 @@
 package com.dhbw.advsoft.project.wms.web.controllers;
 
 import com.dhbw.advsoft.project.wms.common.Constants;
-import com.dhbw.advsoft.project.wms.domain.models.Product;
 import com.dhbw.advsoft.project.wms.domain.models.Warehouse;
 import com.dhbw.advsoft.project.wms.domain.repositories.WarehouseRepository;
 import com.dhbw.advsoft.project.wms.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -32,17 +30,6 @@ public class WarehouseController {
     public ResponseEntity<Warehouse> getWarehouseById(@PathVariable Long id) {
         Warehouse warehouse = warehouseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Warehouse not exist with id: " + id));
         return ResponseEntity.ok(warehouse);
-    }
-
-    @PutMapping(BASEPATH + "/{id}")
-    public ResponseEntity<Warehouse> updateWarehouse(@PathVariable Long id, @RequestBody Warehouse warehouseDetails){
-        Warehouse warehouse = warehouseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Warehouse not exist with id: " + id));
-
-        warehouse.setName(warehouseDetails.getName());
-
-        Warehouse updatedWarehouse = warehouseRepository.save(warehouse);
-        return ResponseEntity.ok(updatedWarehouse);
     }
 
     @DeleteMapping(BASEPATH + "/{id}")
